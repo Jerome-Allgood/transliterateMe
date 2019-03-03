@@ -1,6 +1,7 @@
 from tkinter import *
 
-# Main transcription analouges
+# Main transcription rules according to https://www.kmu.gov.ua/ua/npas/243262567 and some symbols.
+# Also special case for zgh
 trans_rules = {"а": "a", "б": "b", "в": "v", "г": "h", "ґ": "g", "д": "d", "е": "e", "є": "ie", "ж": "zh", "з": "z",
                "и": "y", "і": "i", "ї": "i", "й": "i", "к": "k", "л": "l", "м": "m", "н": "n", "о": "o", "п": "p",
                "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "kh", "ц": "ts", "ч": "ch", "ш": "sh",
@@ -13,32 +14,19 @@ trans_rules = {"а": "a", "б": "b", "в": "v", "г": "h", "ґ": "g", "д": "d",
                "ё": "zgh", "Ё": "Zgh",
                "1": "1", "2": "2", "3": "3", "4": "4", "5": "5", "6": "6", "7": "7", "8": "8", "9": "9", "0": "0"}
 
-# For first letters
-# ю = yu
-# я = ya
-# є = ye
-# й = y
-# ї = yi
 
-# List of special first letters
+# List of special first letters (spelling rules are different for this letters in first position)
 first_letters = {"й": "y", "Й": "Y", "ї": "yi", "Ї": "Yi", "є": "ye", "Є": "Ye", "ю": "yu", "Ю": "Yu",
                  "я": "ya", "Я": "Ya"}
 
-target = "Їїїї, много жіжі. Піпа піпа ме, фасоль. Згори донизу, згораю"
-test_string = "згзгзгзг"
 
-
-# Special cases
-# зг = zgh
-# Зг = Zgh
-
-
+# Special letter combination зг
 def check_for_special_case(string):
     string = string.replace("Зг", "Ё")
     string = string.replace("зг", "ё")
     return string
 
-
+# Main logic for transliteration
 def transliterate(string):
     words_arr = str(string).split(" ")
     new_words_arr = []
@@ -81,12 +69,7 @@ transcribe_button.place(relx=.5, rely=.8, anchor="c")
 
 root.mainloop()
 
-# For first letters
-# ю = yu
-# я = ya
-# є = ye
-# й = y
-# ї = yi
+
 
 
 
