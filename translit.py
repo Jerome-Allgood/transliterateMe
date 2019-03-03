@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 
 # Main transcription rules according to https://www.kmu.gov.ua/ua/npas/243262567 and some symbols.
 # Also special case for zgh
@@ -35,10 +36,14 @@ def transliterate(string):
         word = check_for_special_case(word)
         new_word = ""
         for x in range(len(word)):
-            if x == 0 and word[x] in first_letters:
-                new_word += first_letters[word[0]]
-            else:
-                new_word += trans_rules[word[x]]
+            try:
+                if x == 0 and word[x] in first_letters:
+                    new_word += first_letters[word[0]]
+                else:
+                    new_word += trans_rules[word[x]]
+            except KeyError:
+                print("Symbol {0} is not defined!".format(word[x]))
+                messagebox.showerror("Error", 'Symbol {0} is not defined!'.format(word[x]))
         new_words_arr.append(new_word)
     return " ".join(new_words_arr)
 
@@ -49,7 +54,7 @@ def set_result():
 
 
 root = Tk()
-root.title("TransliterateMe v0.2")
+root.title("TransliterateMe v0.3")
 root.geometry("500x200")
 
 message = StringVar()
@@ -65,6 +70,5 @@ result_entry.place(relx=.5, rely=.6, anchor="c")
 
 transcribe_button = Button(text="Transliterate", command=set_result)
 transcribe_button.place(relx=.5, rely=.8, anchor="c")
-
 
 root.mainloop()
