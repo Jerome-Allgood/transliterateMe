@@ -26,6 +26,7 @@ def check_for_special_case(string):
     string = string.replace("зг", "ё")
     return string
 
+
 # Main logic for transliteration
 def transliterate(string):
     words_arr = str(string).split(" ")
@@ -54,7 +55,6 @@ root.geometry("500x200")
 message = StringVar()
 result = StringVar()
 enter_label = Label(text="Enter text in Ukrainian language: ")
-result_label = Label(text="Result: ")
 message_entry = Entry(textvariable=message, width=75)
 message_entry.place(relx=.5, rely=.3, anchor="c")
 enter_label.place(anchor="c", relx=.5, rely=.15)
@@ -68,10 +68,3 @@ transcribe_button.place(relx=.5, rely=.8, anchor="c")
 
 
 root.mainloop()
-
-
-
-
-
-
-
