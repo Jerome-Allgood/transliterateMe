@@ -12,7 +12,6 @@ trans_rules = {"а": "a", "б": "b", "в": "v", "г": "h", "ґ": "g", "д": "d",
                "Л": "L", "М": "M", "Н": "N", "О": "O", "П": "P", "Р": "R", "С": "S", "Т": "T", "У": "U", "Ф": "F",
                "Х": "Kh", "Ц": "Ts", "Ч": "Ch", "Ш": "Sh", "Щ": "Shch", "Ю": "Iu", "Я": "Ia",
                " ": " ", ".": ".", ",": ",", "!": "!", "?": "?", "-": "-", "_": "_", '"': '"', "—": "—",
-               "ё": "zgh", "Ё": "Zgh",
                "1": "1", "2": "2", "3": "3", "4": "4", "5": "5", "6": "6", "7": "7", "8": "8", "9": "9", "0": "0"}
 
 
@@ -21,26 +20,26 @@ first_letters = {"й": "y", "Й": "Y", "ї": "yi", "Ї": "Yi", "є": "ye", "Є":
                  "я": "ya", "Я": "Ya"}
 
 
-# Special letter combination зг
-def check_for_special_case(string):
-    string = string.replace("Зг", "Ё")
-    string = string.replace("зг", "ё")
-    return string
-
-
 # Main logic for transliteration
 def transliterate(string):
     words_arr = str(string).split(" ")
     new_words_arr = []
     for word in words_arr:
-        word = check_for_special_case(word)
         new_word = ""
         for x in range(len(word)):
             try:
                 if x == 0 and word[x] in first_letters:
                     new_word += first_letters[word[0]]
                 else:
-                    new_word += trans_rules[word[x]]
+                    if word[x] == 'з' and x != len(word)-1 and word[x + 1].lower() == 'г':
+                        new_word += "zgh"
+                    elif word[x] == 'З' and x != len(word)-1 and word[x + 1].lower() == 'г':
+                        new_word += "Zgh"
+                    elif word[x].lower() == "г" and x != 0:
+                        if word[x-1].lower() == 'з':
+                            continue
+                    else:
+                        new_word += trans_rules[word[x]]
             except KeyError:
                 print("Symbol {0} is not defined!".format(word[x]))
                 messagebox.showerror("Error", 'Symbol {0} is not defined!'.format(word[x]))
